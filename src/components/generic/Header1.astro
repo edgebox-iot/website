@@ -1,0 +1,30 @@
+---
+
+---
+<!-- -------- START HEADER 1 w/ text and image on right ------- -->
+<header>
+    <div class="page-header min-vh-70">
+      <div class="oblique position-absolute top-0 h-100 d-md-block d-none">
+        <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url(/img/curved-images/curved11.jpg)"></div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-7 d-flex justify-content-center flex-column mt-6">
+            <h1 class="text-gradient text-primary">
+                <slot name="title">Title</slot>
+            </h1>
+            <h1 class="mb-4">
+                <slot name="subtitle">Subtitle</slot>
+            </h1>
+            <p class="lead pe-5 me-5">
+                <slot name="text">Text</slot>
+            </p>
+            <slot name="extra">
+
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- -------- END HEADER 1 w/ text and image on right ------- -->

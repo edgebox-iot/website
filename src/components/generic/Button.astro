@@ -1,0 +1,18 @@
+---
+let size = Astro.props.size || 'sm'
+let round = Astro.props.round == 'true' ? ' btn-round' : ''
+let color = Astro.props.color || 'primary'
+let text = Astro.props.text || 'Button'
+let link = Astro.props.link || '#'
+let extraClasses = Astro.props.extraClasses || ''
+let htmlclass = "btn btn-" + size + " bg-gradient-" + color + round + " mb-0 me-1 mt-2 mt-md-0 " + extraClasses
+---
+<a href={link} class={htmlclass}>
+    {text}
+</a>
+
+<style>
+    .btn.btn-round {
+        border-radius: 10px;
+    }
+</style>

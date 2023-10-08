@@ -1,0 +1,39 @@
+---
+// Layout Imports
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Component Imports
+import Header from '../components/generic/Header1.astro';
+---
+<BaseLayout title="Edgebox">
+	<div slot="content">
+        <Header>
+            <div slot="title">
+                Install Edgebox
+            </div>
+            <div slot="subtitle">
+                Ready to go?
+            </div>
+            <div slot="text">
+                <b>Choose your platform to get started:</b>
+            </div>
+            <div slot="extra">
+                <button type="button" class="btn btn-primary mx-1 mt-1"><img src="/img/icon-linux-white.png">Linux</button>
+                <button type="button" class="btn btn-secondary mx-1 mt-1"><img src="/img/icon-macos-white.png">Mac OS</button>
+                <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Coming Soon" style="display: inline-table;">
+                    <button type="button" class="btn disabled text-white btn-info mx-1 mt-1"><img src="/img/icon-windows-white.png">Windows</button>
+                </a>
+            </div>
+        </Header>
+    </div>
+</BaseLayout>
+
+<style>
+    .btn {
+        font-size: 1rem;
+    }
+    .btn img {
+        max-width: 1rem;
+        margin-right: 10px;
+    }
+</style>
