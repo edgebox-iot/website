@@ -1,0 +1,152 @@
+---
+// Layout Imports
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+---
+<BaseLayout title="Edgebox">
+    <div slot="content">
+        <section class="">
+            <div class="page-header min-vh-85">
+                <div>
+                    <img class="position-absolute fixed-top ms-auto w-50 h-100 z-index-0 d-none d-sm-none d-md-block border-radius-section border-top-end-radius-0 border-top-start-radius-0 border-bottom-end-radius-0" src="/img/curved-images/curved6.jpg" alt="image">
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7 d-flex justify-content-center flex-column">
+                            <div id="warning-container" class="mt-10 bg-gradient-warning text-center py-3 text-white border-radius-xl" style="display: none;"><b>A problem occured. Verify the form data and try again.</b></div>
+                            <!-- <div class="mt-10 bg-gradient-success text-center py-3 text-white border-radius-sm mb-2"><b>Account created!</b>></div> -->
+                            <div class="card d-flex blur justify-content-center p-4 shadow-lg my-sm-0 my-sm-6 mt-8 mb-5">
+                                <div class="text-center">
+                                    <h3 class="text-gradient text-primary">Cloud Early Access</h3>
+                                    <p class="mb-0">
+                                        We are onboarding supporters who can help us test out project for a limited period of time. <b>Interested in being part?</b> Fill out the form below and we'll get in contact soon 😉
+                                    </p>
+                                </div>
+                                <form id="signup-form" method="post" autocomplete="off">
+                                    <div class="card-body pb-2">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Name</label>
+                                                <div class="input-group mb-4">
+                                                    <input class="form-control" id="name" name="name" placeholder="First & Last name" aria-label="Full Name" type="text" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 ps-md-2">
+                                                <label>Email</label>
+                                                <div class="input-group">
+                                                    <input type="email" id="email" name="email" class="form-control" placeholder="me@myemail.com" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                                <div class="col">
+                                                    <label>Username</label>
+                                                    <div class="input-group mb-4">
+                                                        <input name="username" id="username" class="form-control" placeholder="Username to identify you on the edgebox.io platform" aria-label="Username to identify you on the edgebox.io platform" type="text" required>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-0 mt-md-0 mt-4">
+                                                    <label>Account Password:</label>
+                                                    <input type="password" name="password" class="form-control" id="password" placeholder="This will be your cloud dashboard password access" required></input>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 ps-md-2">
+                                                <div class="form-group mb-0 mt-md-0 mt-4">
+                                                    <label>Password confirmation:</label>
+                                                    <input type="password" name="passwordConfirm" class="form-control" id="passwordConfirm" placeholder="Type the same password, just to be sure ;)" required></input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <!-- <div class="form-group mb-0 mt-md-0 mt-4">
+                                            <label>How do you intend to use Edgebox? What does interest you the most?</label>
+                                            <textarea name="message" class="form-control" id="message" rows="6" placeholder="Describe how you plan to test edgebox throughout the test phase. If you have any specific ideas of what you want to achieve, let us know!"></textarea>
+                                        </div> -->
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <button type="submit" class="btn bg-gradient-primary mt-3 mb-0">Apply for early access</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="text-center">
+                                    <p class="text-sm">
+                                        Already have an account?
+                                        <a href="/cloud/login" class="text-primary text-gradient font-weight-bold">Login here</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</BaseLayout>
+
+<script>
+    
+    // If user is logged in, redirect to dashboard
+    // Import and start PocketBase
+    import PocketBase from 'pocketbase'
+    const pb = new PocketBase('https://adm-pocketbase.edgebox.io');
+
+    // Check if user is logged in, if so redirect to dashboard
+    if( pb.authStore.isValid ) {
+        window.location.href = '/cloud/dash';
+    } else {
+        console.log('User is not logged in');
+    }
+
+    // When form is submitted, send data to the server
+    document.getElementById("signup-form").addEventListener("submit", function(e) {
+        e.preventDefault();
+        var form = document.getElementById("signup-form");
+        var formData = new FormData(form);
+        var formObject = {};
+        formData.forEach(function(value, key){
+            formObject[key] = value;
+        });
+        console.log("Object: ")
+        console.log(formObject)
+
+        // example create data
+        const extraData = {
+            "emailVisibility": true,
+        };
+
+        // merge formObject with extraData
+        const data = Object.assign(formObject, extraData)
+
+        // Create user
+        pb.collection('users').create(data).then((res) => {
+            console.log(res);
+            if(res.status == 200 || res.id != null || res.id != undefined || res.id != "") {
+                // Redirect to dashboard
+                pb.collection('users').requestVerification(res.email).then((confirmRes) => {
+                    console.log("Sent verification email")
+                    console.log(confirmRes);
+                }).catch((err) => {
+                    console.log("Error sending verification email")
+                    console.log(err);
+                });
+                window.location.href = '/cloud/dash?signup=true';
+            } else {
+                // Show error message
+                var warningContainer = document.getElementById("warning-container")
+                warningContainer.innerHTML = "<b>" + res.message + " Please verify the data and try again.</b>";
+                warningContainer.style.display = "block";
+            }
+        }).catch((err) => {
+            console.log(err);
+            // Show error message
+            var warningContainer = document.getElementById("warning-container")
+            warningContainer.innerHTML = "<b>" + err.message + " Please verify the data and try again.</b>";
+            warningContainer.style.display = "block";
+        });
+    });
+
+</script>

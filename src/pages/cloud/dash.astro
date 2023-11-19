@@ -1,0 +1,289 @@
+---
+// Layout Imports
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+---
+<BaseLayout title="Edgebox">
+    <div slot="content">
+        <header class="bg-gradient-dark">
+            <div class="page-header min-vh-75" style="background-image: url('');">
+                <span class="mask bg-gradient-info opacity-8"></span>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 mx-auto my-auto">
+                            <section class="py-sm-7 py-5 position-relative">
+                                <div class="container card blur">
+                                    <div class="row" id="loading-card" style="display: block;">
+                                        <div class="col-12 mx-auto">
+                                            <div class="row text-center py-lg-7 py-5">
+                                                <p><img src="/img/icon-cloud-white.png" alt="icon" class="img border-radius-lg max-width-200 w-100"><br><b>Loading...</b></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="confirm-email-card" style="display: none;">
+                                        <div class="col-12 mx-auto">
+                                            <div class="row text-center py-lg-7 py-5">
+                                                <p><img src="/img/illustrations/chat.png" alt="icon" class="img border-radius-lg max-width-200 w-100"><br><b>Unconfirmed Account</b><br>Activate your account by confirming your e-mail address, and try again.</p>
+                                                <!-- <div class="col col-12 mt-2">
+                                                    <div class="btn btn-white logout-btn">Logout</div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="no-instances-card" style="display: none;">
+                                        <div class="col-12 mx-auto">
+                                            <div class="row text-center py-lg-7 py-5 mx-5">
+                                                <p><img src="/img/illustrations/sign-up.png" alt="icon" class="img border-radius-lg max-width-200 w-100"><br><b>No instances assigned yet</b><br>Please be patient while the team prepares your early access test. <br>You will receive an e-mail once an instance is assigned to your account!</p>
+                                                <!-- <div class="col col-12 mt-2">
+                                                    <div class="btn btn-white logout-btn">Logout</div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="main-instance-card" style="display: none;">
+                                        <div class="col-12 mx-auto">
+                                            <div class="row py-lg-7 py-5">
+                                                <div class="col-lg-3 col-md-5 position-relative my-auto">
+                                                    <img class="img border-radius-lg max-width-200 w-100 position-relative z-index-2" src="/img/icon-cloud-white.png" alt="icon">
+                                                </div>
+                                                <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mt-sm-0 mt-4">
+                                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                                        <h4 class="mb-0"><span id="main-instance-name"></span></h4>
+                                                        <!-- <div class="d-block">
+                                                            <button id="main-instance-button" type="button" class="btn btn-sm btn-outline-danger text-nowrap mb-0">Reset</button>
+                                                        </div> -->
+                                                    </div>
+                                                    <div class="row mb-4">
+                                                        <div class="col-auto">
+                                                            <span class="h6">Status: </span>
+                                                            <span id="main-instance-status">Online <span style="font-size: 10px;">🟢</span> </span>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <span class="h6">Started on:</span>
+                                                            <span id="main-instance-started">16 Nov 2023</span>
+                                                        </div>
+                                                        <!-- <div class="col-auto">
+                                                            <span class="h6">260</span>
+                                                            <span>Following</span>
+                                                        </div> -->
+                                                    </div>
+                                                    <p class="text-lg mb-0">
+                                                        This instance is currently running and online. Access the dashboard to manage the instance and use its edgeapps.
+                                                        <br> 
+                                                        <br>
+                                                        <a href="#" id="main-instance-url" class="text-info icon-move-right">Access Dashboard
+                                                            <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="position-absolute w-100 z-index-1 bottom-0">
+                    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 40" preserveAspectRatio="none" shape-rendering="auto">
+                        <defs>
+                            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+                        </defs>
+                        <g class="moving-waves">
+                            <use xlink:href="#gentle-wave" x="48" y="-1" fill="rgba(255,255,255,0.40"></use>
+                            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.35)"></use>
+                            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.25)"></use>
+                            <use xlink:href="#gentle-wave" x="48" y="8" fill="rgba(255,255,255,0.20)"></use>
+                            <use xlink:href="#gentle-wave" x="48" y="13" fill="rgba(255,255,255,0.15)"></use>
+                            <use xlink:href="#gentle-wave" x="48" y="16" fill="rgba(255,255,255,1"></use>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </header>
+        <!-- <section class="py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h3 class="mb-5">Other instances on this account:</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-9 col-sm-12">
+                        <div class="row">
+                            
+                            <div class="col-lg-4 col-sm-6" class="instance-list-card">
+                                <div class="card card-plain card-blog">
+                                    <div class="card-image border-radius-lg position-relative">
+                                        <a href="javascript:;">
+                                            <img class="w-100 border-radius-lg move-on-hover shadow" src="/img/box-stacking.png">
+                                        </a>
+                                    </div>
+                                    <div class="card-body px-0">
+                                        <h5>
+                                            <a href="javascript:;" class="text-dark font-weight-bold">example.edgebox.io</a>
+                                        </h5>
+                                        <div class="row mb-4">
+                                            <div class="col-auto">
+                                                <span class="h6">Status: </span>
+                                                <span id="main-instance-status">Online <span style="font-size: 10px;">🟢</span> </span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <span class="h6">Started on:</span>
+                                                <span id="main-instance-started">16 Nov 2023</span>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:;" class="text-info icon-move-right">Access Dashboard
+                                            <i class="fas fa-arrow-right text-sm" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-12 col-12">
+                        <div class="card card-blog card-background">
+                            <div class="full-background" style="background-image: url('/img/curved-images/curved14.jpg')"></div>
+                            <div class="card-body">
+                                <div class="content-left text-start my-auto py-4">
+                                    <a href="javascript:;">
+                                        <h2 class="card-title text-white">Want more?</h2>
+                                        <p class="card-description text-white">Edgebox can fullfill the needs of many use cases. Let us know what yours is and how we can support you achieving it.</p>
+                                    </a><a href="javascript:;" class="text-white icon-move-right">Read More
+                                        <i class="fas fa-arrow-right text-sm" aria-hidden="true"></i>
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+        <section class="container my-2 py-5">
+            <div class="row">
+                <div class="col col-12 text-center">
+                    <p class=""><div class="btn btn-white logout-btn">Logout</div></p>
+                </div>
+            </div>
+        </section>
+    </div>
+</BaseLayout>
+
+<script>
+    
+    import PocketBase from 'pocketbase'
+    const pb = new PocketBase('https://adm-pocketbase.edgebox.io');
+    
+    // Check if user is logged in, if so redirect to dashboard
+    if( pb.authStore.isValid ) {
+        console.log('User is logged in');
+        console.log(pb.authStore.model)
+        const isVerified = pb.authStore.model && pb.authStore.model.verified
+        // Check if the user is confirmed
+        if( !isVerified ) {
+            console.log('User is not confirmed');
+            document.getElementById('confirm-email-card').style.display = 'block';
+            document.getElementById('loading-card').style.display = 'none';
+        } else {
+            
+            // Get the user's profile
+            // you can also fetch all records at once via getFullList
+            const records = await pb.collection('instances').getFullList({
+                sort: '-created',
+            });
+            
+            console.log(records)
+            
+            // Check if the user has any instances
+            if( records.length > 0 ) {
+                console.log('User has instances');
+                
+                // Get the first instance
+                const instance = records[0];
+                
+                console.log('Instance is confirmed');
+                
+                console.log(instance)
+                
+                // Check if the instance is online
+                if( instance.running ) {
+                    console.log('Instance is online');
+                    
+                    // Show the main instance car
+                    document.getElementById('main-instance-card').style.display = 'block';
+                    
+                    // Set the instance name
+                    document.getElementById('main-instance-name').innerText = instance.hostname + ".edgebox.io";
+                    
+                    // Set the instance status
+                    document.getElementById('main-instance-status').innerHTML = 'Online <span style="font-size: 12px;">🟢</span>';
+                    
+                    // Set the instance started date, in the Following format: dd Mo YYYY. Example: 16 Nov 2023
+                    var date = new Date(instance.created);
+                    var options = { year: 'numeric', month: 'short', day: 'numeric' };
+                    document.getElementById('main-instance-started').innerText = date.toLocaleDateString("en-DE", options);
+                    
+                    document.getElementById('main-instance-url').href = instance.url;
+                    
+                    // Set the instance button text
+                    // document.getElementById('main-instance-button').innerText = 'Reset';
+                    
+                    // Set the instance button click event
+                    // document.getElementById('main-instance-button').addEventListener('click', () => {
+                        //     console.log('Resetting instance');
+                        // });
+                        
+                    } else {
+                        console.log('Instance is offline');
+                        
+                        // Show the main instance card
+                        document.getElementById('main-instance-card').style.display = 'block';
+                        
+                        // Set the instance name
+                        document.getElementById('main-instance-name').innerText = instance.name;
+                        
+                        // Set the instance status
+                        document.getElementById('main-instance-status').innerHTML = 'Offline <span style="font-size: 12px;">🔴</span>';
+                        
+                        // Set the instance started date
+                        document.getElementById('main-instance-started').innerText = instance.created;
+                        
+                        // // Set the instance button text
+                        // document.getElementById('main-instance-button').innerText = 'Start';
+                        
+                        // Set the instance button click event
+                        // document.getElementById('main-instance-button').addEventListener('click', () => {
+                            //     console.log('Starting instance');
+                            // });
+                        }
+                        
+                        // Hide the loading card
+                        document.getElementById('loading-card').style.display = 'none';
+                        
+                    } else {
+                        console.log('User has no instances');
+                        
+                        // Hide the loading card
+                        document.getElementById('loading-card').style.display = 'none';
+                        document.getElementById('no-instances-card').style.display = 'block';
+                    }
+                    
+                }
+                
+            } else {
+                console.log('User is not logged in');
+                window.location.href = '/cloud/login';
+            }
+            
+            const logout = document.getElementsByClassName('logout-btn');
+            for (let i = 0; i < logout.length; i++) {
+                console.log('Adding logout event listener');
+                logout[i].addEventListener('click', () => {
+                    pb.authStore.clear();
+                    window.location.href = '/cloud/login';
+                });
+            }
+        </script>

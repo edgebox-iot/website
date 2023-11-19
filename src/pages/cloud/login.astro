@@ -1,0 +1,104 @@
+---
+// Layout Imports
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+---
+<BaseLayout title="Edgebox">
+	<div slot="content">
+        <section class="">
+            <div class="page-header min-vh-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                            <div id="error-container" class="bg-gradient-danger text-center py-3 text-white border-radius-md" style="display: none;"><b>There was a problem. Please try again.</b></div>
+                            <div class="card card-plain">
+                                <div class="card-header pb-0 text-left">
+                                    <h4 class="font-weight-bolder">Sign In</h4>
+                                    <p class="mb-0">Enter your edgebox.io account details to sign in</p>
+                                </div>
+                                <div class="card-body">
+                                    <form role="form">
+                                        <div class="mb-3">
+                                            <input type="email" class="form-control form-control-lg" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                                        </div>
+                                        <!-- <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                                        </div> -->
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                    <p class="mb-4 text-sm mx-auto">
+                                        Looking for early access?
+                                        <a href="/cloud/early-access" class="text-primary text-gradient font-weight-bold">Apply here</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                            <div class="position-relative bg-gradient-secondary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
+                                <img src="/img/shapes/pattern-lines.svg" alt="pattern-lines" class="position-absolute opacity-4 start-0">
+                                <div class="position-relative">
+                                    <img class="max-width-500 w-100 position-relative z-index-2" src="/img/illustrations/sign-up.png">
+                                </div>
+                                <h4 class="mt-5 text-white font-weight-bolder">"So many things need privacy"</h4>
+                                <p class="text-white">Run your private cloud services and back them up effortlessly</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</BaseLayout>
+
+<script>
+
+    // Import and start PocketBase
+    import PocketBase from 'pocketbase'
+    const pb = new PocketBase('https://adm-pocketbase.edgebox.io');
+
+    // Check if user is logged in, if so redirect to dashboard
+    if( pb.authStore.isValid ) {
+        window.location.href = '/cloud/dash';
+    } else {
+        console.log('User is not logged in');
+    }
+
+    // When form is submitted, send data to the server
+    document.querySelector('form').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Get form data
+        const email = document.querySelector('input[type="email"]').value;
+        const password = document.querySelector('input[type="password"]').value;
+
+        const authData = pb.collection('users').authWithPassword(
+            email,
+            password,
+        );
+
+        console.log(authData);
+
+        authData.then((res) => {
+            var errorContainer = document.getElementById('error-container')
+            errorContainer.style.display = 'none'
+            console.log(res)
+            window.location.href = '/cloud/dash'
+        }).catch((err) => {
+            console.log(err);
+            var errorContainer = document.getElementById('error-container')
+            errorContainer.innerHTML = err.message
+            errorContainer.style.display = 'block'
+        });
+
+    });
+
+
+</script>
