@@ -27,6 +27,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                         
                         <div class="col-lg-8 mx-auto my-auto confirm e-mail-card" id="confirm-email-card" style="display: none;">
                             <section class="py-sm-7 py-5 position-relative">
+                                <div class="header-greeting"><h1 class="text-white">Hello</h1></div>
                                 <div class="container card blur">
                                     <div class="row">
                                         <div class="col-12 mx-auto">
@@ -44,6 +45,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                         
                         <div class="col-lg-8 mx-auto my-auto no-instances-card" id="no-instances-card" style="display: none;">
                             <section class="py-sm-7 py-5 position-relative">
+                                <div class="header-greeting"><h1 class="text-white">Hello</h1></div>
                                 <div class="container card blur">
                                     <div class="row">
                                         <div class="col-12 mx-auto">
@@ -62,6 +64,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                         
                         <div class="col-md-12 col-lm-12 col-lg-8 mx-auto my-auto main-instance-card" id="main-instance-card" style="display: none;">
                             <section class="py-sm-7 py-5 position-relative">
+                                <div class="header-greeting mt-7"><h1 class="text-white">Hello</h1></div>
                                 <div class="row instances-row" id="instances-row" style="margin-top: 4rem;">
                                     
                                 </div>
@@ -132,10 +135,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
         console.log('User is logged in');
         console.log(pb.authStore.model)
+        
         const isVerified = pb.authStore.model && pb.authStore.model.verified
         // Check if the user is confirmed
         if( !isVerified ) {
             console.log('User is not confirmed');
+            Array.from(document.getElementsByClassName('header-greeting')).forEach(element => {
+                element.innerHTML = '<h2 class="text-white">Hello ' + pb.authStore.model.name + ' 👋</h2>';
+            });
             document.getElementById('confirm-email-card').style.display = 'block';
             document.getElementById('loading-card').style.display = 'none';
         } else {
@@ -159,6 +166,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                     // This user has more than 1 instance. Adapt the layout
                     console.log('User has more than 1 instance');
                     column_layout = "col-lg-6"
+                    Array.from(document.getElementsByClassName('header-greeting')).forEach(element => {
+                        element.innerHTML = '<h2 class="text-white">Hello ' + pb.authStore.model.name + ' 👋 here\'s your ' + records.length + ' instances:</h2>';
+                    });
+                } else {
+
                 }
                 
                 // Get the first instance
@@ -177,12 +189,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                     const date = new Date(instance.created);
                     const options = { year: 'numeric', month: 'short', day: 'numeric' };
 
+                    var is_last = false;
+                    var iteration_layout = column_layout;
+                    if( i == records.length - 1 ) {
+                        is_last = true;
+                    }
+
+                    // if last instance and odd number of instances, use full width, otherwise use column_layout
+                    if( is_last && records.length % 2 != 0 ) {
+                        iteration_layout = "col-lg-12";
+                    }
+
                     instances_html += `
-                        <div class="${column_layout} instance-column-layout">
+                        <div class="${iteration_layout} instance-column-layout">
                             <div class="container card blur mt-4"> 
                                 <div class="row">
                                     <div class="col-12 mx-auto">
-                                        <div class="row py-5">
+                                        <div class="row pt-5 pb-2>
                                             <div class="col-lg-3 col-md-5 position-relative my-auto text-center">
                                                 <img class="img border-radius-lg max-width-200 w-100 position-relative z-index-2" src="/img/icon-cloud-white.png" alt="icon">
                                             </div>
