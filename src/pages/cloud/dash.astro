@@ -95,15 +95,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </header>
 
                
-        <section class="container my-2 py-5">
+        <section class="container my-2 py-5" id="feedback-section-container" style="display: none;">
             <div class="row">
                 <div class="col col-lg-3 col-md-2 col-sm-0 col-xs-0 col-0"></div>
                 <div class="col col-12 col-lg-6 col-md-8 col-sm-12 col-xs-12 text-center">
                     <h2 class="mb-4">🤔 Issues 💭 Feedback 💡 Ideas?</h2>
+                    <div class="alert alert-success alert-dismissible fade show text-white" role="alert" id="feedback-alert-success" style="display: none;">
+                        <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                        <span class="alert-text"><strong>Thank you!</strong> If this is was a support request, we will get back to you asap.</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
                     <form id="feedback-form">
                         <div class="form-group">
-                            <label for="feedbackTextArea">Please share any thoughts that can help us improve the experience, or let us know directly in case you're having any issues. The team looks daily at early tester messages.</label>
-                            <textarea class="form-control" id="feedbackTextArea" rows="8"></textarea>
+                            <label for="message">Please share any thoughts that can help us improve the experience, or let us know directly in case you're having any issues. The team looks daily at early tester messages.</label>
+                            <textarea class="form-control" id="message" rows="8"></textarea>
                         </div>
                         <input type="submit" class="btn btn-success" value="Send Message">
                     </form>
@@ -174,8 +181,28 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                         element.innerHTML = '<h2 class="text-white">Hello ' + pb.authStore.model.name + ' 👋 here\'s your ' + records.length + ' instances:</h2>';
                     });
                 } else {
-
+                    Array.from(document.getElementsByClassName('header-greeting')).forEach(element => {
+                        element.innerHTML = '<h2 class="text-white">Hello ' + pb.authStore.model.name + ' 👋 here\'s your early access instance:</h2>';
+                    });
                 }
+
+                // activate the feedback box:
+                document.getElementById('feedback-section-container').style.display = 'block';
+
+                // Listen for feedback form submit to send data to server
+                document.getElementById('feedback-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    console.log('Feedback form submitted');
+                    const message = document.getElementById('message').value;
+                    console.log(message);
+                    const feedback = await pb.collection('feedback_messages').create({
+                        from: "website_cloud_dash",
+                        data: message,
+                        user: pb.authStore.model.id,
+                    });
+                    console.log(feedback);
+                    document.getElementById('feedback-alert-success').style.display = 'block';
+                }); 
                 
                 // Get the first instance
                 // const instance = records[0];
