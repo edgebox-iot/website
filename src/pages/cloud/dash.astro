@@ -68,6 +68,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                                 <div class="row instances-row" id="instances-row" style="margin-top: 4rem;">
                                     
                                 </div>
+                                <div class="alert alert-warning text-white mt-4" role="alert" id="instances-warning-alert" style="display: none;">
+                                    <span class="alert-icon"><i class="ni ni-ui-04"></i></span>
+                                    <span class="alert-text"><strong>One or more of your instances appear to be offline. If you are having any issues with the test phase or need any support, please contact us through the box below 👇</strong></span>
+                                </div>
                             </section>
                         </div>
                     </div>
@@ -90,24 +94,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             </div>
         </header>
 
-        <!--         
+               
         <section class="container my-2 py-5">
             <div class="row">
                 <div class="col col-lg-3 col-md-2 col-sm-0 col-xs-0 col-0"></div>
                 <div class="col col-12 col-lg-6 col-md-8 col-sm-12 col-xs-12 text-center">
-                    <h2 class="mb-4">Got Feedback?</h2>
+                    <h2 class="mb-4">🤔 Issues 💭 Feedback 💡 Ideas?</h2>
                     <form id="feedback-form">
                         <div class="form-group">
-                            <label for="feedbackTextArea">Please share your thought about Edgebox with us. We will read this message!</label>
-                            <textarea class="form-control" id="feedbackTextArea" rows="3"></textarea>
+                            <label for="feedbackTextArea">Please share any thoughts that can help us improve the experience, or let us know directly in case you're having any issues. The team looks daily at early tester messages.</label>
+                            <textarea class="form-control" id="feedbackTextArea" rows="8"></textarea>
                         </div>
-                        <input type="submit" class="btn btn-success" value="Submit">
+                        <input type="submit" class="btn btn-success" value="Send Message">
                     </form>
                 </div>
                 <div class="col col-lg-3 col-md-2 col-sm-0 col-xs-0 col-0"></div>
             </div>
 
-        </section> -->
+        </section>
             
         <section class="container my-2 py-5">
             <div class="row">
@@ -185,6 +189,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                     console.log(instance)
 
                     const instance_status = instance.running ? 'Online <span style="font-size: 12px;">🟢</span>' : 'Offline <span style="font-size: 12px;">🔴</span>'
+                    
+                    // if instance is offline, show warning alert
+                    if( !instance.running ) {
+                        document.getElementById('instances-warning-alert').style.display = 'block';
+                    }
+                    
                     // Set the instance started date, in the Following format: dd Mo YYYY. Example: 16 Nov 2023
                     const date = new Date(instance.created);
                     const options = { year: 'numeric', month: 'short', day: 'numeric' };
