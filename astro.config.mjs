@@ -8,6 +8,6 @@ export default defineConfig({
 	// Support a custom domain
 	site: 'https://edgebox.io',
 	redirects: {
-    		'/sh': 'https://raw.githubusercontent.com/edgebox-iot/install/main/install.sh?token=GHSAT0AAAAAACOR7TIKNSRJG7AASMEKZYZAZRAD6AA'
-  	}
+  		'/sh': 'https://github.com/edgebox-iot/install/releases/download/v1.0.0-beta.1/install.sh'
+	}
 });
