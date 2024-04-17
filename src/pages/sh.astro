@@ -1,0 +1,48 @@
+---
+// Layout Imports
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Component Imports
+import Header from '../components/generic/Header1.astro';
+---
+<BaseLayout title="Edgebox">
+	<div slot="content">
+        <Header>
+            <div slot="title">
+                Install Edgebox
+            </div>
+            <div slot="subtitle">
+                Ready to go?
+            </div>
+            <div slot="text">
+                <b>Choose your platform to get started:</b>
+            </div>
+            <div slot="extra">
+                <a href="https://docs.edgebox.io/setup/installation/#locally" class="btn btn-primary btn-install-local mx-1 mt-1"><img src="/img/icon-linux-white.png" class="img-no-right-margin"><img src="/img/icon-macos-white.png">Locally</a>
+                <a href="https://docs.edgebox.io/setup/installation/#raspberry-pi" type="button" class="btn btn-secondary btn-install-raspberry mx-1 mt-1"><img src="/img/icon-raspberrypi-white.png">Raspberry Pi</a>
+                <a href="/cloud/early-access" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Coming Soon" style="display: inline-table;">
+                    <button type="button" class="btn text-white btn-info mx-1 mt-1 btn-install-cloud"><img src="/img/icon-cloud-white.png">Cloud</button>
+                </a>
+            </div>
+        </Header>
+    </div>
+</BaseLayout>
+
+<style>
+    .btn {
+        font-size: 1rem;
+    }
+    .btn img {
+        max-width: 1rem;
+        margin-right: 10px;
+    }
+    .img-no-right-margin {
+        margin-right: 0px !important;
+    }
+</style>
+
+<script>
+    // Hide the .install-btn
+    document.querySelector('.btn-install').style.display = 'none';
+
+</script>
