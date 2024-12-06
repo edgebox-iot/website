@@ -41,3 +41,7 @@ Astro will output your site to the dist/ directory. Then, you can serve your sit
 ```bash
 bunx --bun astro preview
 ```
+
+## Contributing
+
+To contribute, please clone the repo / create a fork, add your changes and submit a PR back.
